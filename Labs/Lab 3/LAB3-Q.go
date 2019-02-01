@@ -96,7 +96,11 @@ Desired Output:
 0) sqrt(511.800000)/2 = 11.311499
 1) sqrt(0.650000)/10 = 0.080623
 2) sqrt(-3.000000)/3 = Main NegError: Negative number -3.000000
+
 3) sqrt(2.123000)/0 = Main Div0Error: Division by 0
+
+
+
 Exercise 3 and Quiz: Waiting for Go Routines to Finish
 Please hand-in the answer to this question as a single go file on Virtual Campus during your lab session but at the latest by Friday 6:00pm! Remember, your submission will only count if you have signed the lab attendance sheet. 
 
