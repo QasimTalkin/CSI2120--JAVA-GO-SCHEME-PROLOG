@@ -44,3 +44,8 @@ goSki(D,W) :-
     temperature( mild, D ),
     wax( W, mild ),
     condition( burma, green ).
+
+
+%Some tips 
+
+write('hell Qasm', nl) .
