@@ -139,6 +139,8 @@ b <- a1 ^ a2 ^ a3
 * leaf with goal one or more are failure nodes 
 * empty leaf are success nodes. 
 * path from root to leaf contains unification's and steps needed for proof. 
+ ![Search Tree](SearchTree.png)
+
 
 #### Solution Strategies of prolog 
 root = head. 
@@ -149,6 +151,8 @@ filled leaf = flase.
 
   * supports common arithmetic 
   * built ins include 
+  * repeat goes one till end. loops forever
+  * cur ! -> stops backtracking, 
   ```
   x//y %integer division 
   x mod y %mod
@@ -190,7 +194,7 @@ pow( X, Y, Z ) :- Y > 1,
 ```
 
 #### Input and Output. 
-'''
+```
 %OUTPUT
 – write(X). adds the value of X to the currently active
 output stream (by default the console).
@@ -216,6 +220,7 @@ test :- repeat,
 write('Answer to everything? (num)'),
 read(X),
 (X=:=42).
+```
 
 #### Example: Write to File
 ```
@@ -225,7 +230,7 @@ write(F, X), nl(F),
 close(F). 
 ```
 
-#### Example: Province.pl
+#### Example: Province PL
 ```
 capital(ontario,toronto).
 capital(quebec,quebec).
@@ -238,4 +243,13 @@ answer(Province) :- capital(Province,City),
 write(City),write(' is the capital of '),
 write(Province),nl,nl,
 askP.
+```
+#### Cut 
+
+* When a fact is proven and we do not need to go further, that is when we use cut. 
+```
+%Human is either male or female so we dont need to further, it will cut of some back tracking path 
+
+human(U) :- male(U), !. 
+human(U) :- female(U), !. 
 ```
