@@ -1,3 +1,4 @@
-qasim oim
-_84
-_7136
+Read line 1 
+from file out
+so that its a Read
+________ APPEND ___ AFTER ____ THIS

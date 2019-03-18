@@ -36,10 +36,12 @@ even(0).
 
 % Interval test 
 intervalTest(X, L, H) :- X>=L, X=<H.
-interval(X, X, H) :- X=<H.
-interval(X, L, H) :- L < H,
+interval(X, L, H):- number(X), number(L), number(H), !, X>=L, X=<H.
+interval(X, X, H) :- number(X), number(H), X=<H.
+interval(X, L, H) :- number(L), number(H), L < H,
                      L1 is L+1,
-                     interval(X, L1, H). 
+                     interval(X, L1, H).
+
 
 calculator :- repeat, 
               read(X),
@@ -60,3 +62,93 @@ main:-
 writefile(X):- open('out.txt', append, F), 
                write(F, X), nl(F), 
                close(F).
+
+%integer root of number. 
+
+%Generator. 
+int(0). %true. 
+int(N) :- int(N1), N is N1+1, print(N).
+%Root predicate. 
+root(N,R):- int(K), print(K),
+            K*K>N, !,
+            R is K-1. 
+
+max(X, Y, X) :- X >=Y, !.  
+max(_,Y,Y). 
+
+
+%Nagation Example 
+
+sad(joe).
+camper(jane).
+happy(X) :- not(sad(X)),
+            camper(X).
+        
+mylist(X, Y, [X|Y]).
+
+%List insert 
+lInsert(A, L, [A|L]). 
+lInsert(A, [X|L], [X|LL]) :- lInsert(A, L, LL).
+
+%nth elemnt of the list. 
+take(1,[H|_],H):- !. % base case 
+take(N,[_|T],X):- N1 is N-1, take(N1,T,X). % when you take n-1 it come to base case. 
+
+%Reversie a list. 
+reverList([], L, L) :-!.
+reverList([H|T], L, R) :- reverList(T, [H|L], R). 
+mirrroAcc(L,R) :- reverList(L, [], R). 
+
+%sample run to cut.
+posT([]). 
+posT([a|Rate]):- posT(Rate), !, nl.
+posT([X|Rate]):- posT(Rate), write(X).
+posT([1,2,3,a,d,v,c,f,g,t]).
+
+
+%Looping 
+countDownR(N) :- N<0,!.
+countDownR(N) :- writeln(N), 
+    NN is N-1, 
+    countDownR(NN).
+
+%find and loop 
+element(chlorine,'Cl').
+element(helium,'He').
+element(hydrogen,'H').
+element(nitrogen,'N').
+element(oxygen,'O').
+
+elmt :-  repeat, writeln("Symbol ? :"), read(X), not(find(X)), nl, write("Bye"), !, fail. 
+find(X):- element(A,X), writeln(" Element is  : "), writeln(A), !.
+find(X):- writeln(X), writeln("not found"), !, fail.
+
+
+%cut and fail 
+canalOpen( saturday ).
+canalOpen( monday ).
+canalOpen( tuesday ).
+raining( saturday ).
+melting( saturday ).
+melting( sunday ).
+melting( monday ).
+
+%return true if the Canal is open, it is not raining and not melting
+weather( X ) :- melting( X ),
+    !, fail.
+weather( X ) :- raining( X ),
+    !, fail.
+weather( _ ).  
+winterlude( X ) :- canalOpen( X ),
+    weather( X ).
+%list processing to finds the second last element of a list.
+secondLast( H, [H|[_|[]]] ) :- !. 
+secondLast( X, [_|T] ) :- secondLast( X, T ). 
+%addsecond. 
+addSecond([], 0).
+addSecond( [_,B|R], S ) :- 
+	addSecond( R, RS ),
+	S is RS + B.
+addSecond( [_|R], S ) :-
+	addSecond( R, S).
+

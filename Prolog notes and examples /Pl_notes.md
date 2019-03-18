@@ -153,7 +153,7 @@ filled leaf = flase.
   * built ins include 
   * repeat goes one till end. loops forever
   * cur ! -> stops backtracking, 
-  ```
+```prolog
   x//y %integer division 
   x mod y %mod
   abs(X)
@@ -169,7 +169,7 @@ filled leaf = flase.
   true. 
   ``` 
   * Comparison 
-```
+```prolog
 X = :  = Y % X Equals Y
 X = \ = Y % X not Equals Y
 X < Y
@@ -185,8 +185,8 @@ min (X, Y, X) : - X<Y.
 min (X, Y, X) : - X>=Y.
 ```
 * postive powers 
-```
-recursion to calculate power to 1
+```prolog
+%recursion to calculate power to 1
 pow( X, Y, Z ) :- Y > 1,
     Y1 is Y - 1,
     pow( X, Y1, Z1 ),
@@ -194,7 +194,7 @@ pow( X, Y, Z ) :- Y > 1,
 ```
 
 #### Input and Output. 
-```
+```prolog
 %OUTPUT
 – write(X). adds the value of X to the currently active
 output stream (by default the console).
@@ -208,7 +208,7 @@ output stream (by default the console).
 read(X). 
 :aaa
 X= aaa
-'''
+
 #### Repeat Predicate (built-in)
 • The built-in predicate repeat is a way to generate multiple
 solution through backtracking.
@@ -223,7 +223,7 @@ read(X),
 ```
 
 #### Example: Write to File
-```
+```prolog
 Write X to file
 writeFile(X):- open('test.txt', append, F),
 write(F, X), nl(F),
@@ -231,7 +231,7 @@ close(F).
 ```
 
 #### Example: Province PL
-```
+```prolog
 capital(ontario,toronto).
 capital(quebec,quebec).
 start :- write('The capitals of Canada'),nl,
@@ -247,9 +247,133 @@ askP.
 #### Cut 
 
 * When a fact is proven and we do not need to go further, that is when we use cut. 
-```
+```prolog
 %Human is either male or female so we dont need to further, it will cut of some back tracking path 
 
 human(U) :- male(U), !. 
 human(U) :- female(U), !. 
 ```
+
+* Analyse the code 
+```prolog
+max(X, Y, X) :- X >=Y. 
+max(_,Y,Y). 
+```
+* gives max of two number but upon hitting " ; " the second max always gives out y
+* solution? use *CUT* as an if else 
+```prolog
+% using cut
+max(X,Y,X) :- X>=Y, !.
+max(_,Y,Y). 
+```
+#### Fail predicate always fails!!!
+is_false(P) :- P, !. fail. 
+is_false(P). 
+
+## LIST!!!
+* List in pl of form [] empty list, [1,2,3,4] list with 4 elements. 
+* list [H|T] of [1,2,3,4] is H=1, T=[2,3,4] T is always a list. 
+* simple list predicate
+```
+mylist([1], [yes,no], L).
+L= [1, yes, no]
+```
+#List processing
+#### List members 
+* listmembers(X,[X|L]). % is head the boundary case 
+* listmembers(X, [Y|L]) :- listmember(X,L)
+#### List lengths
+lLength([],0). 
+lLength([X|L],N):- lLength(L,NN),
+                    N is NN+1. 
+#### List lengths
+lLength([],0). 
+lLength([X|L],N):- lLength(L,NN),
+                    N is NN+1. 
+
+#### List insertion
+lInsert(A, L, [A|L]). 
+linsert(A, [X|L], [X|LL]) :- listInsert (A, L, LL). 
+
+#### Joining list 
+appendL([], Y, y).
+appendL([A|B], Y, [A|W]) :- appendList(B, Y, W).
+
+#### List of characters. 
+read_line(line) :- get_char(C), read_line(C, Line). 
+read_line('\n', []) :- !. 
+read_line(C, [C|Rest]):- c\= '\n', get_har(NextC), readline(NextC, Rest).
+
+#### List representation
+* can be written with symbols. 
+* The list {aa,bb,cc,dd}  can be written as (aa.(bb.(cc.(dd.nil))))
+* ![Image](treelist.png)
+* The notation X.Y represents X as head and Y as tai.
+* x.y is not a list but a pair for list it should have bracket x.(y.nil)
+
+#### List insertion and deletions
+* lInsert(A, L, [A|L]).
+* lInsert(A, [X|L], [X|LL]):- linsert(A,L,LL).
+
+* Deletion of first occurrence of an element. 
+  * dFront(R, [R|L], L). %element Found. 
+  * dFront(R, [X|LL], [X|L]):- dFront(R, LL, L).  
+* Delete all occurrence of an element. 
+  * dAll(_, [], []). % if empty return empty. 
+  * dAll(X, [X|T], Result) :- dAll(X, T, Result), !. %delete once. 
+  * dAll(X, [H|T], [H|Result]) :- dAll(X, T, Result), !. %delete once. 
+
+```prolog
+%Put X as the first element to L
+ XL = [X|L]. 
+%Put X as the k-th element to L
+putk(X,1,L,[X|L]):- !.
+putk(X,K,[F|L],[F|LX]):- K1 is K-1, putk(X,K1,L,LX).
+%Delete one X from L (indeterministic!)
+ del(X,[X|L],L).
+ del(X,[Y|L],[Y|L1]):-
+ del(X,L,L1).
+%Delete all X from L
+ delall(_,[],[]):- !.
+ delall(X,[H|L],[H|LL]):- X \= H,!, delall(X,L,LL).
+ delall(X,[X|L],LL):- delall(X,L,LL).
+```
+
+#### List intersection. 
+* If the lis empty return empty list
+  * InterSect([], _, []).
+
+* check if member of the list, return intersection from there. 
+  * interSect([X|Xx], Ys, Zs) :- not(member(X, Ys)), 
+     interSect(Xs, Ys, Zs). 
+
+#### Quick Sorting in list 
+```prolog
+  sortList([], []).  %basecase
+sortList([P|Q], T) :- partitionList(P,Q,G,D),
+                      sortList(G, GG), 
+                      sortList(D, DD), 
+                      appenf(GG, [P|DD], T).
+```
+* Splitting list with pivot. 
+  * one greater than pivot.
+  * one smaller than pivot. 
+  ```prolog
+    partitionList(P,[X|L],[X|PG],PD):- X@<P, % or lessThan(X, P)
+    partitionList(P, L, PG, PD).
+    partitionList(P,[X|L],[X|PG],PD):- X@>=P 
+    partitionList(P, L, PG, PD).
+    partitionList(P, [], [], []).
+  ```
+
+#### Invert the list. 
+* mirroe ([], []).
+* mirror ([X|L1], L2):- mirror[L1, L3], 
+  append(L3, [X], L2). 
+OR
+
+reverList([], L, L) :-!.
+reverList([H|T], L, R) :- reverList(T, [H|L], R). 
+
+mirrroAcc(L,R) :- (L, [1,2,3]). 
+L= [3,2,1]. 
