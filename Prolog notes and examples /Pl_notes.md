@@ -377,3 +377,48 @@ reverList([H|T], L, R) :- reverList(T, [H|L], R).
 
 mirrroAcc(L,R) :- (L, [1,2,3]). 
 L= [3,2,1]. 
+
+# Collection Solution
+
+* bagof/3 
+  * finds all solutions and enters than into a list 
+    ```prolog
+    [1] 75 ?- bagof(OT, OT^(city(X, ontario), team(OT,X)), OTeams).
+    X = guelph,
+    OTeams = [gryphons] ;
+    X = kingston,
+    OTeams = [queens] ;
+    X = ottawa,
+    OTeams = [ravens, ggs].
+
+    [1] 76 ?-  bagof(OT, X^(city(X, ontario), team(OT,X)), OTeams).
+    OTeams = [ravens, ggs, gryphons, queens].
+    ```
+* setof/3 
+  * same as bag of but no duplicates 
+    ```prolog
+    setof(X, sport(X, basketball), BPlist).
+    BPlist = [jane, joe, robert].
+
+    setof(OT, (city(X, ontario), team(OT,X)), OTeams).
+    X = guelph,
+    OTeams = [gryphons] ;
+    X = kingston,
+    OTeams = [queens] ;
+    X = ottawa,
+    OTeams = [ggs, ravens].
+
+   setof(OT, X^(city(X, ontario), team(OT,X)), OTeams).
+   OTeams = [ggs, gryphons, queens, ravens].
+
+   findall(X, (setof(Y, Y^sport(X,Y),Xs), length(Xs, 2)), ListofTwoPs).
+   ListofTwoPs = [annie, suzy].
+
+    ```
+* very imp! use ^ to put all the result in the list! :) 
+
+
+
+findall((Y,Z), (team(X, ottawa), player(Y,X), sport(Y,Z)), L).
+
+setof((Name,Game), Team^(sport(Name,Game), player(Name,Team), team(Team, ottawa)),Lan).
