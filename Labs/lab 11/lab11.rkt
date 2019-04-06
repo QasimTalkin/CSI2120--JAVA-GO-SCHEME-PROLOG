@@ -1,0 +1,27 @@
+#lang racket
+
+(printf "------BEGIN-----\n")
+(printf "--------1-------\n")
+(cons 3 '(4))
+(cons 1 '(2 3))
+(cons 1 '())
+(cons 2 '(3 (4)))
+(printf "--------2-------\n")
+(define LL '(1 (2 3 4) (5))) 
+(cons (car (cadr LL)) (cdr (cdr LL)))
+(printf "--------3-------\n")
+(define (range first last)
+    (if (> first last)
+      '()
+      (cons first (range (+ first 1) last))
+    )
+)
+(range 4 9)
+
+(define (startfrom k i) (build-list i (lambda (x) (+ x k)))
+)
+(printf "------QUIZ------\n")
+(define Q '(1 2 (a 3 4 5)))
+(car (car (cdr (cdr Q))))
+
+
