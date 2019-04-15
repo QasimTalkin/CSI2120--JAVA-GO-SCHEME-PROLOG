@@ -1,0 +1,120 @@
+<HTML>
+<HEAD>
+<TITLE>CSI 2120, Winter 2019, Lab 8</TITLE>
+</HEAD>
+<BODY >
+<h1> CSI 2120</h1>
+<h2> Lab 8: Prolog</h2>
+
+
+<h3>Exercise 1: Permutations</h3>
+
+<p>
+Given three colors: red, green and blue. Generate a list that finds all possible permutations of these three colors. Note, that in a permutation order matters and e.g., <code>[ red, blue, green]</code> is not the same as <code>[ green, red, blue]</code>. Hint: use setof.
+</p> 
+
+<p>
+<pre><code>
+color(red).
+color(green).
+color(blue).
+</code></pre>
+
+?- __________________.<br>
+<pre><code>
+L = [[red,red,red],[red,red,green],[red,red,blue], ... ]
+</code></pre>
+
+
+<h3>Exercise 2: Leaf Nodes</h3>
+
+Write a Prolog program that finds all the leaf nodes of binary tree and returns them in a list.
+
+
+<pre><code>
+?- leafNodes(t( 2, nil, t(3, nil, nil)),L).
+L = [3]. 
+</code></pre>
+
+
+
+
+<h3>Exercise 3: Cabin Puzzle</h3>
+
+Six girls sleep in bunk beds in the junior cabin at camp . Each girl has a different color blanket on her bed. The beds are lined up in a row with red, black, yellow, brown, blue and green blankets.
+<ul>
+  <li> Reeva and Haley are closest to the door. </li>
+  <li> The color of the blankets on the bottom bunks all begin with the same letter. </li>
+  <li> The color of Beth's blanket doesn't begin with the same letter as her name. </li>
+  <li> The blue blanket is under the red blanket. </li>
+  <li> Liza and Kayla like their lower bunks. </li>
+  <li> Kayla is in the middle bed. </li>
+  <li> Zoe doesn't share a bunk with Kayla.</li>
+  <li> The brown blanket is at the end of a row.</li>
+  <li> The yellow is above the black blanket.</li>
+</ul>
+<p>
+The solution should be represented as follows 
+<code>Sol= [[Name,Color],[Name,Color],...]</code>
+where the order encodes the beds. They are in the following order bottom, up, bottom, up from left to right.
+
+Using the built-in predicate <code>member/2</code> and the or operator <code>;</code> Complete the following <code>bunkbed</code> predicate:
+
+<pre><code>
+bunkbeds(L):- L=[[N1,C1],[N2,C2],[kayla,C3],[N4,C4],[N5,C5],[N6,C6]],
+    ((N1=reeva,N2=haley);(N2=reeva,N1=haley)),  /* Constraint 1.*/
+    ______________________________________,
+    ______________________________________,
+    ______________________________________,
+    ______________________________________,
+    ______________________________________,
+    ______________________________________,
+    ______________________________________,
+    ______________________________________,
+    ______________________________________,
+    ______________________________________,
+    ______________________________________.
+</code></pre>
+
+               
+
+<h3>Exercise 4 and Quiz: </h3>
+
+
+<em>Please hand-in the answer to this question on Virtual Campus during your lab session but at the latest by Friday 6:00pm! Remember, your submission will only count if you have signed the lab attendance sheet.</em>
+<br><br>
+
+
+<p>
+  Complete the Prolog program below that processes a binary tree replacing all keys in nodes with a value of 0 with a value of 1. 
+</p> 
+<p>
+  <pre><code>
+  zeroNodes(nil,_______________________) :- !.
+
+zeroNodes(t(0,L,R),________________________) :- 
+    zeroNodes(L,___________________),
+    zeroNodes(R,___________________), !.
+        
+zeroNodes(t(Key,L,R),________________________) :-
+    zeroNodes(L,___________________),
+    zeroNodes(R,___________________).
+</p>
+
+<p>
+Examples:
+<pre><code>
+?- zeroNodes(t(0,nil,nil),T).
+T = t(1, nil, nil).
+
+?- zeroNodes(t(0,t(3,nil,t(0,nil,nil)),t(3,nil,nil)),T).
+T = t(1, t(3, nil, t(1, nil, nil)), t(3, nil, nil)).
+</code></pre>
+
+
+
+
+
+
+</BODY>
+</HTML>

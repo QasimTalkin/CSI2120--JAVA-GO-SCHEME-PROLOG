@@ -1,0 +1,139 @@
+<HTML>
+<HEAD>
+<TITLE>CSI 2120, Winter 2019, Lab 2</TITLE>
+</HEAD>
+<BODY >
+<h1> CSI 2120</h1>
+<h2> Lab 2: Go</h2>
+
+<h3>Exercise 1: Basic Methods</h3>
+
+<p>
+Define the type <tt>dog</tt> as follows:
+<pre><code>
+type dog struct {
+  name string
+  race string
+  female bool
+}
+</code></pre>
+Write a method that will rename a dog which can be used as follows:
+</p>
+
+<pre><code>
+func main() {
+    fido := dog {"Fido", "Poodle", false }
+    fido.rename("Cocotte")
+}
+</code></pre>
+
+<h3>Exercise 2: Go Channel Basics</h3>
+
+<p>
+Test what will be printed by the following
+</p>
+
+<pre><code>
+package main
+
+import (
+    "fmt"
+    "time"
+    "strconv"
+)
+
+var i int
+
+func makeCakeAndSend(cs chan string) {
+    i = i + 1
+    cakeName := "Strawberry Cake " + strconv.Itoa(i)
+    fmt.Println("Making a cake and sending ...", cakeName)
+    cs <- cakeName //send a strawberry cake
+}
+
+func receiveCakeAndPack(cs chan string) {
+    s := <-cs //get whatever cake is on the channel
+    fmt.Println("Packing received cake: ", s)
+}
+
+func main() {
+    cs := make(chan string)
+    for i := 0; i<3; i++ {
+        go makeCakeAndSend(cs)
+        go receiveCakeAndPack(cs)
+
+        //sleep for a while so that the program doesn't exit
+        //immediately and output is clear for illustration
+        time.Sleep(1 * 1e9)
+    }
+} 
+</code></pre>
+
+<h3>Exercise 3 and Quiz: </h3>
+
+<em>Please hand-in the answer to this question as a single go file on Virtual Campus during your lab session but at the latest by Friday 6:00pm! Remember, your submission will only count if you have signed the lab attendance sheet.</em>
+<br><br>
+
+
+<p>
+The following program is to be changed such that it uses arbitrary sized slices instead of fixed size arrays. In particular, the user entered size (variable sz) is to replace the hard-coded 32 in main and any function changed correspondingly.
+</p>
+
+<pre><code>
+package main
+
+import "fmt"
+import "math"
+import "math/rand"
+
+type Series struct {
+	a, b float64
+}
+
+func (s Series) add(t, TP int) float64 {
+	return s.a*math.Sin(2.0*math.Pi*float64(t)/float64(TP)) + s.b*math.Cos(2.0*math.Pi*float64(t)/float64(TP))
+}
+
+func fourier(c [32]Series, t, TP int) (res float64) {
+	res = c[0].a
+	for n := 1; n < 32; n++ {
+		res += c[n].add(t, TP)
+	}
+	return
+}
+
+func main() {
+	TP := 4
+	sz := 1
+	var res float64
+
+	// Enter size of fourier series
+	fmt.Print("Size of series (1 ... 512): ")
+	// Depending on your environment you may have to remove \n in the scanf
+	_, err := fmt.Scanf("%d \n", &sz)
+	for err != nil || sz < 1 || sz > 512 {
+		fmt.Println("Must be positive integer (1...512).")
+		fmt.Println("Size of series (1 ... 512): ")
+		_, err = fmt.Scanf("%d \n", &sz)
+	}
+	fmt.Printf("Size: %d\n", sz)
+
+	var c [32]Series
+
+	for t := 0; t < TP; t++ {
+		for k := 0; k < 32; k++ {
+			c[k].a = rand.Float64()
+			c[k].b = rand.Float64()
+		}
+		res += fourier(c, t, TP)
+		fmt.Printf("%f ", res)
+		fmt.Println()
+	}
+}
+</code></pre>
+
+
+
+
+</BODY>
+</HTML>

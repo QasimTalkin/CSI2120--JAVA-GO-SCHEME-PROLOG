@@ -1,0 +1,132 @@
+<HTML>
+<HEAD>
+<TITLE>CSI 2120, Winter 2019, Lab 5</TITLE>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</HEAD>
+<BODY >
+<h1> CSI 2120</h1>
+<h2> Lab 5: Prolog</h2>
+
+<h3>Exercise 1. Flight Schedule</h3>
+
+Given the following facts:<br>
+
+<pre><code>
+flight(montreal, chicoutimi, 15:30, 16:15).
+flight(montreal, sherbrooke, 17:10, 17:50).
+flight(montreal, sudbury, 16:40, 18:45).
+flight(northbay, kenora, 13:10, 14:40).
+flight(ottawa, montreal, 12:20, 13:10).
+flight(ottawa, northbay, 11:25, 12:20).
+flight(ottawa, thunderbay, 19:00, 20:30).
+flight(ottawa, toronto, 10:30, 11:30).
+flight(sherbrooke, baiecomeau, 18:40, 20:05).
+flight(sudbury, kenora, 20:15, 21:55).
+flight(thunderbay, kenora, 20:00, 21:55).
+flight(toronto, london, 13:15, 14:05).
+flight(toronto, montreal, 12:45, 14:40).
+flight(windsor, toronto, 8:50, 10:10).
+</code></pre>
+
+<p>
+Which of the following predicates allows one to decide if one's arrival time at the airport is early enough to catch a certain flight. On-time arrival at the airport is at least 60 minutes prior to the corresponding departure time of the flight.
+</p>
+
+Rule Set 1:<br>
+
+<pre><code>
+on_time(H1 : _M1, D, A)  :- 
+        flight(D, A, H2 : _M2, _H3 : _M3),H2 - H1 > 1.
+on_time(H1 : M1, D, A)  :- 
+        flight(D, A, H2 : M2, _H3 : _M3), 
+        H2 - H1 =:= 1, MM is 60 - M1,  MM + M2 >= 60.
+</code></pre>
+
+Rule Set 2:<br>
+
+<pre><code>
+on_time(H1 : _M1, D, A)  :- 
+        flight(D, A, H2 : _M2, _H3 : _M3),H2 - H1 > 2.
+on_time(H1 : M1, D, A)  :- 
+        flight(D, A, H2 : M2, _H3 : _M3), 
+        H2 - H1 =:= 1, MM is 60 - M1,  MM + M2 >= 60.
+</code></pre>
+
+Rule set 3:<br>
+
+<pre><code>
+on_time(H1 : _M1, D, A)  :- 
+        flight(D, A, H2 : _M2, _H3 : _M3),H2 - H1 > 2.
+on_time(H1 : M1, D, A)  :- 
+        flight(D, A, H2 : M2, _H3 : _M3), 
+        H2 - H1 =\= 1, MM is 60 - M1,  MM + M2 >= 60.
+</code></pre>
+
+Rule Set 4:<br>
+
+<pre><code>
+on_time(H1 : _M1, D, A)  :- 
+        flight(D, A, H2 : _M2, _H3 : _M3),H2 - H1 > 1.
+on_time(H1 : M1, D, A)  :- 
+        flight(D, A, H2 : M2, _H3 : _M3), 
+        H2 - H1 =:= 1, MM is 60 - M1,  MM - M2 < 60.
+</code></pre>
+
+<h3>Exercise 2. Arrival Predicate</h3>
+<p>
+Write an arrival predicate which enables the following type of query with the database of Exercise 1:
+</p>
+
+<pre><code>
+?- arrival( flight(montreal,sherbrooke), X).
+X=17:10
+</code></pre>
+
+<h3>Exercise 3. Sum of Integers</h3>
+<p>
+Write a predicate that finds the sum of the first N numbers, i.e., it should enable queries of the form <tt>sum_int(N,X)</tt>.
+</p>
+
+<h3>Exercise 4 and Quiz: Series</h3>
+
+<em>Please hand-in the answer to this question on Virtual Campus during your lab session but at the latest by Friday 6:00pm! Remember, your submission will only count if you have signed the lab attendance sheet.</em>
+
+<p>
+  We would like to define a predicate that calculates the series
+  $ a_n = \frac{1}{2} ( a_{n-1} + \frac{9}{a_{n-1}})$ for $n>1$ with $a_0 = M$.
+</br>
+Use the following head for the rule of the predicate where N is the count for the series and M is the value for $a_0$, while Y is the result.
+</p>
+
+<pre><code>
+    seriesNM(0,______,______).
+    seriesNM(N,M,Y) :- N &gt; 0,
+			_____________,
+			_____________,
+			_____________.
+</code></pre>
+
+
+<p>
+Example Output:
+</p>
+
+<pre><code>
+    ?- seriesNM(20,15,Y).
+    Y = 3.0;
+    false. 
+</code></pre>
+
+<pre><code>
+    ?- seriesNM( 2, 50, Y).
+    Y = 12.724354324432044 ;
+    false.
+</code></pre>
+
+</BODY>
+</HTML>

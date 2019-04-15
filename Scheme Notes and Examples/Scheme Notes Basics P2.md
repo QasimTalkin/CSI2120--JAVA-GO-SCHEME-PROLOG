@@ -409,4 +409,27 @@ v
 2
 (vector-set! v 1 10)
 => #(2 10)
+;Converting a List into a Vector
+;Scheme functions for vector and list conversions
+(list->vector '(1 2 3 4))
+(vector->list (list->vector '(1 2 3 4)))
+```
+
+### Sorting Vectors and Lists
+
+#### Sorting functions available in Scheme
+* dialect dependent
+* Racket has sort (while MIT Scheme has quick-sort and
+merge-sort accepting a list or vector) with an order
+predicate (here less-than). sort only accepts lists
+* The predicate test must have the general form
+  
+>(and (test x y) (test y x))
+
+• Examples
+```scheme
+(sort '(3 4 2 1 2 5) <)
+=> (1 2 2 3 4 5)
+(sort '(0.5 1.2 1.1) >)
+=> (1.2 1.1 .5)
 ```

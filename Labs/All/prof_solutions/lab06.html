@@ -1,0 +1,116 @@
+<HTML>
+<HEAD>
+<TITLE>CSI 2120, Winter 2019, Lab 6</TITLE>
+</HEAD>
+<BODY >
+<h1> CSI 2120</h1>
+<h2> Lab 6: Prolog</h2>
+
+<h3>Exercise 1. Looping</h3>
+
+<pre><code>
+countDown(N):- repeat, writeln(N), N is N-1, N<0, !. 
+</code></pre>
+
+<p>
+Test the above predicate with the query 
+<tt> ?- countDown(5).</tt>. Explain what happens and why? Find a solution to the problem that you have observed.
+</p>
+
+
+<h3>Exercise 2. Chemical Elements</h3>
+
+Given the following database of chemical elements and their symbols in the periodic table.
+For example :
+<pre><code>
+element(chlorine,'Cl').
+element(helium,'He').
+element(hydrogen,'H').
+element(nitrogen,'N').
+element(oxygen,'O').
+</code></pre>
+
+Write an interactive Prolog program for the user to enter a symbol and the program prints the name of the corresponding chemical element. If the symbol is not in the database, the program should exit otherwise loop again.
+
+Example :
+
+<pre><code>
+Elements in the Periodic Table 
+Symbol to look-up: 'O'.
+O is the symbol for: oxygen
+Symbol to look-up: 'He'.
+He is the symbol for: helium
+Symbol to look-up: 'K'.
+Don't know the symbol: K 
+Exiting.
+</code></pre>
+
+
+<h3>Exercise 3: Cut-Fail</h3>
+
+Consider the following database: 
+
+<pre><code>
+canalOpen( saturday ).
+canalOpen( monday ).
+canalOpen( tuesday ).
+
+raining( saturday ).
+
+melting( saturday ).
+melting( sunday ).
+melting( monday ).
+</code></pre>
+
+Write a Prolog predicate to return true if it is advisable to go to winterlude.
+It should return true if the Canal is open, it is not raining and not melting 
+You must use cut-fail in your solution and your predicate should work as follows:
+
+<pre><code>
+?- winterlude(X).
+X = tuesday.
+</code></pre>
+
+
+Hint: You will need to add an intermediate predicate to deal with negation.
+
+
+<h3>Exercise 4. List Processing</h3>
+
+<p>
+Write a Prolog predicate <tt>secondLast</tt> that finds the second last element of a list.
+</p>
+
+<pre><code>
+?- secondLast(X,[7,abc,foo,x,9,12]).
+X = 9
+</code></pre>
+
+
+<h3>Exercise 5 and Quiz: Lists</h3>
+
+<em>Please hand-in the answer to this question on Virtual Campus during your lab session but at the latest by Friday 6:00pm! Remember, your submission will only count if you have signed the lab attendance sheet.</em>
+
+<p>
+Write a predicate which processes a list of numbers by adding up every second number. The predicate is to work as shown below. (Note that you are not asked to check the input to be a valid list of numbers but can simply assume that your predicate always receive list of numbers). 
+</p>
+
+<pre><code>
+?- addSecond([1,3,5,4],S).
+S = 7.
+
+?- addSecond([1,3,5],S).
+S = 3.
+
+?- addSecond([1,3],S).
+S = 3.
+
+?- addSecond([1],S).
+S = 0.
+
+?- addSecond([1,3,5],3).
+true.
+</code></pre>
+
+</BODY>
+</HTML>

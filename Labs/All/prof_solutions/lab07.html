@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<TITLE>CSI 2120, Winter 2019, Lab 7</TITLE>
+</HEAD>
+<BODY >
+<h1> CSI 2120</h1>
+<h2> Lab 7: Prolog</h2>
+
+<h3>Exercise 1: Maximum and Minimum Elements</h3>
+
+Write a Prolog program that finds the maximum and minimum element in a list of numbers. The program should work as follows:
+
+<pre><code>
+?- maxmin([3,1,5,2,7,3],Max,Min).
+Max = 7
+Min = 1
+
+?- maxmin([2],Max,Min).
+Max = 2
+Min = 2
+
+</code></pre>
+
+<h3>Exercise 2: Odd and Even</h3>
+
+Write a Prolog program that processes a list of numbers and outputs another list which consists of a list of the constants odd and even corresponding to the numbers.
+
+<pre><code>
+?- oddEven([3,1,5,2,7,3],L).
+L = [odd,odd,odd,even,odd,odd].
+</code></pre>
+
+
+<h3>Exercise 3: List Reversal with Every Second Element</h3>
+
+
+Create a Prolog program to reverse the order of the elements in a list but also remove every second element.
+
+The program should work as follows:
+
+<pre><code>
+?- reverseDrop([3,1,5,2,7,3],L).
+L = [ 7, 5, 3 ].
+
+?- reverseDrop(['world','a','hello'],L).
+L = [ 'hello', 'world' ].
+</code></pre>
+
+
+
+<h3>Exercise 4: Adding up all the Numbers in a List</h3>
+
+<p>
+Complete the predicate below that is to add up all the numbers in a list but uses an alternating sign.
+
+Example:
+
+<pre><code>
+?- addAlternate([5,6,1],S).
+S = 0.
+
+?- addAlternate([3,1,5,2,7,3],S).
+S = 9.
+</code></pre>
+
+
+<p>
+<pre><code>
+addAlternate(L,S) :- __________________________.
+
+
+addAlternate(___________________).     
+
+addAlternate([H|T],A,p,S) :- !,
+	AA is A + H,
+	addAlternate(T,AA,m,S).
+
+addAlternate([H|T],A,m,S) :- !, 
+	AA is A - H,
+        addAlternate(T,AA,p,S).
+</code></pre>
+
+
+<h3>No quiz this week!</h3>
+
+
+
+</BODY>
+</HTML>
