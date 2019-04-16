@@ -9,6 +9,11 @@
 (let ((f (lambda (x) (* x x)))) (+ (f 1) (f 2) (f 3) (f 4)))
 
 ;; ---------------------------------------------
+; Calculate the sum of the squares for the numbers 1 to 4. Hint: Your result should be 30.
+; Calculate both solutions to 2x^2 + 5x - 3 = 0.
+; Calculate the result of the sin(pi/4) cos(pi/3) + cos(pi/4) sin(pi/3)
+
+
 (/ (+ -5 (sqrt (- (* 5 5) (* -4 2 -3)))) (* 2 2))
 (/ (+ -5 (sqrt (+ (* 5 5) (* -4 2 -3)))) (* 2 2))
 
@@ -49,3 +54,4 @@
               (/ (- (- b) d) (* 2 a))))))
 	
 (q 2 5 -3)
+
